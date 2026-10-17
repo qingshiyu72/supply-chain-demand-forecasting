@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="utf-8">
+<title>供应链需求预测 · 基线对比看板</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin:0; padding:32px 20px 60px; background:#f6f5f2; color:#23211e;
+         font-family:-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; }
+  .wrap { max-width:980px; margin:0 auto; }
+  h1 { font-size:24px; margin:0 0 6px; letter-spacing:.5px; }
+  .sub { color:#6f6a62; font-size:13px; margin-bottom:26px; }
+  .kpis { display:grid; grid-template-columns:repeat(4,1fr); gap:14px; margin-bottom:26px; }
+  .kpi { background:#fff; border:1px solid #e6e2da; border-radius:10px; padding:16px 18px; }
+  .kpi .v { font-size:26px; font-weight:650; letter-spacing:-.5px; }
+  .kpi .l { font-size:12px; color:#6f6a62; margin-top:6px; line-height:1.5; }
+  .card { background:#fff; border:1px solid #e6e2da; border-radius:10px; padding:20px 22px; margin-bottom:20px; }
+  h2 { font-size:15px; margin:0 0 14px; font-weight:650; }
+  h2 span { font-weight:400; color:#8a8478; font-size:12px; margin-left:8px; }
+  table { width:100%; border-collapse:collapse; font-size:13px; }
+  th { text-align:left; font-weight:600; color:#6f6a62; font-size:12px;
+        padding:6px 8px; border-bottom:1px solid #e6e2da; }
+  td { padding:7px 8px; border-bottom:1px solid #f1eee8; }
+  tr:last-child td { border-bottom:none; }
+  .num { text-align:right; font-variant-numeric:tabular-nums; }
+  .bar { background:#f1eee8; border-radius:3px; height:8px; overflow:hidden; }
+  .bar span { display:block; height:8px; border-radius:3px; }
+  code { background:#f1eee8; padding:1px 5px; border-radius:4px; font-size:12px; }
+  ul { margin:0; padding-left:20px; font-size:13.5px; line-height:1.85; color:#33302b; }
+  .foot { color:#8a8478; font-size:12px; margin-top:24px; line-height:1.7; }
+</style></head><body><div class="wrap">
+<h1>供应链需求预测 · 基线对比</h1>
+<div class="sub">A / B 两条供应链｜训练 2018-06-04 ~ 2021-03-01｜测试 2021-03-02 ~ 2021-06-07（98 天）｜指标为加权 WAPE</div>
+
+<div class="kpis">
+  <div class="kpi"><div class="v">3.85%</div><div class="l">A 组测试集加权 WAPE<br>最优方法：指数平滑</div></div>
+  <div class="kpi"><div class="v">4.04%</div><div class="l">B 组测试集加权 WAPE<br>最优方法：指数平滑</div></div>
+  <div class="kpi"><div class="v">16%</div><div class="l">A 组单元贡献 80% 需求<br>B 组为 14.6%</div></div>
+  <div class="kpi"><div class="v">5.7×</div><div class="l">第 14 周误差 / 第 1 周误差<br>A 4.8× / B 5.7×</div></div>
+</div>
+
+<div class="card"><h2>方法对比<span>验证集，98 天等长回测；条越短越好</span></h2>
+<table><tr><th>组</th><th>方法</th><th class="num">加权WAPE</th><th></th><th class="num">加权偏差</th></tr>
+<tr><td>A</td><td>全历史均值</td><td class="num">16.05%</td><td><div class="bar"><span style="width:4%;background:#e08a4b"></span></div></td><td class="num">-13.16%</td></tr><tr><td>A</td><td>近90天均值</td><td class="num">5.10%</td><td><div class="bar"><span style="width:87%;background:#e08a4b"></span></div></td><td class="num">-3.18%</td></tr><tr><td>A</td><td>近28天均值</td><td class="num">3.70%</td><td><div class="bar"><span style="width:98%;background:#e08a4b"></span></div></td><td class="num">-1.91%</td></tr><tr><td>A</td><td>指数平滑(α=0.1)</td><td class="num">3.46%</td><td><div class="bar"><span style="width:100%;background:#e08a4b"></span></div></td><td class="num">-1.71%</td></tr><tr><td>B</td><td>全历史均值</td><td class="num">20.21%</td><td><div class="bar"><span style="width:4%;background:#e08a4b"></span></div></td><td class="num">-18.62%</td></tr><tr><td>B</td><td>近90天均值</td><td class="num">7.87%</td><td><div class="bar"><span style="width:88%;background:#e08a4b"></span></div></td><td class="num">-5.45%</td></tr><tr><td>B</td><td>近28天均值</td><td class="num">6.53%</td><td><div class="bar"><span style="width:97%;background:#e08a4b"></span></div></td><td class="num">-4.56%</td></tr><tr><td>B</td><td>指数平滑(α=0.1)</td><td class="num">6.08%</td><td><div class="bar"><span style="width:100%;background:#e08a4b"></span></div></td><td class="num">-4.10%</td></tr></table></div>
+
+<div class="card"><h2>误差随预测步长衰减<span>最优方法，测试集逐周</span></h2>
+<table><tr><th>组</th><th>W1</th><th>W2</th><th>W3</th><th>W4</th><th>W5</th><th>W6</th><th>W7</th><th>W8</th><th>W9</th><th>W10</th><th>W11</th><th>W12</th><th>W13</th><th>W14</th></tr><tr><td>A</td><td class="num">1.25%</td><td class="num">1.79%</td><td class="num">2.26%</td><td class="num">2.63%</td><td class="num">2.89%</td><td class="num">3.20%</td><td class="num">3.72%</td><td class="num">4.36%</td><td class="num">4.65%</td><td class="num">4.62%</td><td class="num">4.89%</td><td class="num">5.51%</td><td class="num">5.90%</td><td class="num">5.95%</td></tr><tr><td>B</td><td class="num">1.06%</td><td class="num">1.46%</td><td class="num">1.78%</td><td class="num">2.47%</td><td class="num">2.73%</td><td class="num">2.94%</td><td class="num">3.56%</td><td class="num">4.51%</td><td class="num">5.43%</td><td class="num">5.64%</td><td class="num">5.94%</td><td class="num">6.17%</td><td class="num">6.45%</td><td class="num">6.04%</td></tr></table></div>
+
+<div class="card"><h2>误差按单元规模<span>小 / 中 / 大各占三分之一单元数</span></h2>
+<table><tr><th>组</th><th class="num">小</th><th class="num">中</th><th class="num">大</th></tr><tr><td>A</td><td class="num">27.9%</td><td class="num">14.5%</td><td class="num">3.8%</td></tr><tr><td>B</td><td class="num">26.4%</td><td class="num">15.3%</td><td class="num">4.0%</td></tr></table></div>
+
+<div class="card"><h2>误差按商品大类</h2>
+<table><tr><th>组</th><th>大类</th><th class="num">需求占比</th><th class="num">加权WAPE</th><th class="num">加权偏差</th></tr>
+<tr><td>A</td><td><code>2eb29301</code></td><td class="num">57.3%</td><td class="num">3.11%</td><td class="num">-1.46%</td></tr><tr><td>A</td><td><code>36964411</code></td><td class="num">28.5%</td><td class="num">5.62%</td><td class="num">-0.46%</td></tr><tr><td>A</td><td><code>75688b02</code></td><td class="num">13.3%</td><td class="num">5.20%</td><td class="num">-0.74%</td></tr><tr><td>A</td><td><code>b6434304</code></td><td class="num">0.9%</td><td class="num">10.57%</td><td class="num">-7.09%</td></tr><tr><td>B</td><td><code>2eb29301</code></td><td class="num">51.1%</td><td class="num">3.75%</td><td class="num">-2.64%</td></tr><tr><td>B</td><td><code>36964411</code></td><td class="num">37.1%</td><td class="num">4.41%</td><td class="num">-0.68%</td></tr><tr><td>B</td><td><code>75688b02</code></td><td class="num">10.9%</td><td class="num">6.34%</td><td class="num">-3.44%</td></tr><tr><td>B</td><td><code>b6434304</code></td><td class="num">0.9%</td><td class="num">10.60%</td><td class="num">-6.68%</td></tr></table></div>
+
+<div class="card"><h2>结论</h2><ul>
+<li><b>历史窗口比模型复杂度重要。</b>全历史均值的加权 WAPE 为 16%/20%，偏差 -13%/-19%——2018 年需求水平是 2019 年的两倍，把三年前的数据等权平均会系统性高估。改用近 28 天均值即降到 3.7%/6.5%。</li>
+<li><b>周内没有可利用的规律。</b>七天相对指数全部落在 0.999~1.001，所以预测采用单元级常数，不做周内画像。</li>
+<li><b>误差几乎全部来自少数大单元之外的地方。</b>大单元加权 WAPE 约 3.8%，小单元高达 27%，且偏差为 -22%——低量单元的需求在上升，平滑法追不上趋势。</li>
+<li><b>98 天跨度内的误差累积是主要的改进空间。</b>误差从第 1 周的 1.1%~1.3% 升到第 14 周的 6% 左右，说明常数预测抓不住趋势，需要引入趋势项或缩短重估周期。</li>
+</ul></div>
+
+<div class="foot">数据来源：天池「供应链需求预测」公开数据集（单元、地理、商品 ID 均已脱敏）。<br>
+权重视角：weight_X.csv 提供的单元权重已用于全部指标计算，因此结论偏向业务量大的单元。</div>
+</div></body></html>

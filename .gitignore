@@ -1,0 +1,23 @@
+# ===== 数据文件 =====
+# 原始数据体积大（约 80MB），不入库。
+# 克隆后请自行从数据集发布页下载，按 data/A、data/B 两组放置，文件名保持不变。
+data/**/*.csv
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+.ipynb_checkpoints/
+
+# ===== 编辑器 / 系统 =====
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ===== 敏感信息 =====
+.env
+*.key
+*.api_key
